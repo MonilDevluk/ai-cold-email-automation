@@ -1,0 +1,219 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -80
+      ],
+      "id": "afe03612-6baa-48a1-bd04-c0bd71a8f88a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ed5a51e-e522-40e7-835f-d0760bf8fdce",
+              "name": "=name",
+              "value": "Rahul",
+              "type": "string"
+            },
+            {
+              "id": "386cb711-a496-47f9-a5a9-fda8c345e9b8",
+              "name": "company",
+              "value": "GrowthTech",
+              "type": "string"
+            },
+            {
+              "id": "7c45763c-8f78-48e1-8044-b9ccb21db9fa",
+              "name": "role",
+              "value": "CTO",
+              "type": "string"
+            },
+            {
+              "id": "7a2ac8e9-5faf-47e2-94b6-a2c0840fb5e2",
+              "name": "pain_point",
+              "value": "improving AI automation workflows",
+              "type": "string"
+            },
+            {
+              "id": "4e02a348-03d4-42cc-8963-b1523456757a",
+              "name": "sender_name",
+              "value": "Monil",
+              "type": "string"
+            },
+            {
+              "id": "ca93bfca-fdc7-4a2d-a263-b5fb79bca33f",
+              "name": "sender_company",
+              "value": "AIFlow",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        -80
+      ],
+      "id": "92ea6bce-be65-4a56-9412-6e20537eb6ca",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a concise personalized cold email.\n\nLead information:\nName: {{$json.name}}\nCompany: {{$json.company}}\nRole: {{$json.role}}\nProblem: {{$json.pain_point}}\n\nSender:\n{{$json.sender_name}}\n\nReturn ONLY JSON with:\nsubject\nbody\n\nBody should contain proper line breaks and no subject line.\nMaximum 120 words.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -128,
+        -80
+      ],
+      "id": "2a8b2c16-7c93-417c-ad31-055971d1022f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        160
+      ],
+      "id": "2a72583e-9f92-47a3-a264-5baef696d751",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "63WqQp7L9tle2q4A",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "monildevluk1907@gmail.com",
+        "subject": "={{$json.subject}}",
+        "message": "={{$json.body.replace(/\\n/g,\"<br>\")}}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        -80
+      ],
+      "id": "dedf6e92-4abf-4930-862d-d033329d4887",
+      "name": "Send a message",
+      "webhookId": "acbbeddc-bc69-4591-92df-5d17000656bb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qKmQkil3ZVMKBFRQ",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "let raw = $json.output;\n\n// remove markdown code blocks if present\nraw = raw.replace(/```json/g, \"\").replace(/```/g, \"\").trim();\n\n// if JSON is wrapped as a string, parse it once\nif (raw.startsWith('\"')) {\n  raw = JSON.parse(raw);\n}\n\n// parse the actual JSON\nconst parsed = JSON.parse(raw);\n\nreturn { json: parsed };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -80
+      ],
+      "id": "eef61c24-9155-48e0-b880-86b88b94c9ff",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "34f36900-197b-41f2-85d0-aa6b0a980017",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9518e8a386bef4f662b3f9202d8fc6839abd8f60494b81318dad9380ab03c877"
+  },
+  "id": "A4ISAuoxyOchm2WH",
+  "tags": []
+}
