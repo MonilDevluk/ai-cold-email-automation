@@ -77,16 +77,13 @@ ai-cold-email-automation
 # Screenshots
 
 ## n8n Workflow
-
-![Workflow](screenshots/workflow.png)
+![Workflow](screenshots/Workflow.png)
 
 ## Workflow Execution
-
-![Execution](screenshots/execution.png)
+![Execution](screenshots/Execution.png)
 
 ## Generated Email Result
-
-![Email Result](screenshots/email_result.png)
+![Email Result](screenshots/Email.png)
 
 ---
 
