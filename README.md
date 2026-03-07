@@ -6,13 +6,29 @@ This project demonstrates how large language models can be integrated into autom
 
 ---
 
+# System Architecture
+
+```
+Lead Data
+   ↓
+AI Email Generation (Google Gemini)
+   ↓
+JSON Parsing (JavaScript Code Node)
+   ↓
+Email Sending (Gmail API)
+```
+
+The workflow is implemented using **n8n**, where each step of the pipeline processes the output from the previous stage.
+
+---
+
 # Project Overview
 
 Cold outreach is a common process in marketing and sales teams, but writing personalized emails manually is time-consuming.
 
-This project automates the process by using an AI model to generate personalized cold emails based on lead information and sending them automatically using Gmail.
+This project automates the process by generating personalized cold emails using AI based on structured lead data and sending them automatically through Gmail.
 
-The workflow is implemented in **n8n**, an open-source automation platform.
+The workflow demonstrates how AI can be integrated with automation platforms to build real-world productivity systems.
 
 ---
 
@@ -31,7 +47,7 @@ Step-by-step pipeline:
 
 # Example Generated Email
 
-Subject: Improving AI Workflows at GrowthTech
+**Subject:** Improving AI Workflows at GrowthTech
 
 Hi Rahul,
 
@@ -77,12 +93,15 @@ ai-cold-email-automation
 # Screenshots
 
 ## n8n Workflow
+
 ![Workflow](screenshots/workflow.png)
 
 ## Workflow Execution
+
 ![Execution](screenshots/execution.png)
 
 ## Generated Email Result
+
 ![Email Result](screenshots/email_result.png)
 
 ---
@@ -117,10 +136,3 @@ This system demonstrates how AI-powered automation can help marketing teams:
 * reduce manual email writing
 * streamline marketing workflows
 
----
-
-# Author
-
-Monil
-Information Technology Engineering Student
-AI Automation & Applied AI Systems
