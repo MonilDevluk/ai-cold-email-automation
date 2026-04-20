@@ -1,10 +1,8 @@
-# AI Cold Email Automation System
+# AI Cold Email Automation
 
-An AI-powered outreach automation workflow built using **n8n, Google Gemini API, and Gmail** to automatically generate and send personalized cold emails.
+Automated pipeline that takes structured lead data, generates a personalized cold email using Google Gemini, and sends it via Gmail — all without manual writing.
 
-This project demonstrates how large language models can be integrated into automation pipelines to streamline marketing outreach and reduce manual work.
-
----
+Built with n8n to demonstrate how LLMs fit into real automation workflows.
 
 # System Architecture
 
