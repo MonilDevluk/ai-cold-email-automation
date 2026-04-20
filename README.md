@@ -1,5 +1,3 @@
-> Focused on the message generation step only. See [ai-cold-email-automation] for the full send pipeline.
-
 # AI Cold Email Automation
 
 Automated pipeline that takes structured lead data, generates a personalized cold email using Google Gemini, and sends it via Gmail — all without manual writing.
