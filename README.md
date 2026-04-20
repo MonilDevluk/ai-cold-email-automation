@@ -127,12 +127,4 @@ ai-cold-email-automation
 
 ---
 
-# Use Case
-
-This system demonstrates how AI-powered automation can help marketing teams:
-
-* automate cold outreach
-* generate personalized messages at scale
-* reduce manual email writing
-* streamline marketing workflows
 
